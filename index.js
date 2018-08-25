@@ -8,7 +8,7 @@ const clovaSkillHandler = clova.Client
   .configureSkill()
   // スキルの起動リクエスト
   .onLaunchRequest(responseHelper => {
-    responseHelper.setSessionAttributes({})
+    //responseHelper.setSessionAttributes({})
     responseHelper.setSimpleSpeech({
       lang: 'ja',
       type: 'PlainText',
