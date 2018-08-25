@@ -32,6 +32,7 @@ const clovaSkillHandler = clova.Client
         responseHelper.setSimpleSpeech(speech)
 
         speech.value = questionfirst
+        responseHelper.setSimpleSpeech(speech)
         responseHelper.setSimpleSpeech(speech, true)
 
         break;
