@@ -27,7 +27,7 @@ const clovaSkillHandler = clova.Client
         speech = {
           lang: 'ja',
           type: 'PlainText',
-          value: `$今日の体重は${weight}です。${questionfirst}`
+          value: `$今日の体重は${weight}キログラムです。${questionfirst}`
         }
         responseHelper.setSimpleSpeech(speech)
 
