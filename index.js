@@ -31,7 +31,11 @@ const clovaSkillHandler = clova.Client
         }
         responseHelper.setSimpleSpeech(speech)
 
-        speech.value = questionfirst
+        speech = {
+          lang: 'ja',
+          type: 'PlainText',
+          value: questionfirst
+        }
         responseHelper.setSimpleSpeech(speech)
         responseHelper.setSimpleSpeech(speech, true)
 
