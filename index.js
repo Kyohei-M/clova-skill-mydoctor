@@ -21,7 +21,7 @@ const clovaSkillHandler = clova.Client
     let speech;
     switch (intent) {
       case 'ResultIntent':
-        responseHelper.setSessionAttributes({})
+        //responseHelper.setSessionAttributes({})
         let weight = 60
         let questionfirst = '具合は大丈夫ですか？'
         speech = {
