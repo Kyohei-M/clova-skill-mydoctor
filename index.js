@@ -23,7 +23,7 @@ const clovaSkillHandler = clova.Client
       case 'ResultIntent':
         //responseHelper.setSessionAttributes({})
         let weight = 60
-        let questionfirst = '具合は大丈夫ですか？'
+        const questionfirst = '具合は大丈夫ですか？'
         speech = {
           lang: 'ja',
           type: 'PlainText',
@@ -31,13 +31,13 @@ const clovaSkillHandler = clova.Client
         }
         responseHelper.setSimpleSpeech(speech)
 
-        speech = {
+        const speech2 = {
           lang: 'ja',
           type: 'PlainText',
           value: questionfirst
         }
-        responseHelper.setSimpleSpeech(speech)
-        responseHelper.setSimpleSpeech(speech, true)
+        responseHelper.setSimpleSpeech(speech2)
+        responseHelper.setSimpleSpeech(speech2, true)
 
         break;
       // 返答がYesの場合
