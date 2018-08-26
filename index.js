@@ -44,11 +44,11 @@ const clovaSkillHandler = clova.Client
           responseHelper.setSimpleSpeech(speech)
 
           info.asking = "feeling"
-          /*speech = {
+          speech = {
             lang: 'ja',
             type: 'PlainText',
             value: messageFeeling
-          }*/
+          }
         }
         else {
           let message
@@ -70,12 +70,12 @@ const clovaSkillHandler = clova.Client
             type: 'PlainText',
             value: `体調のチェックを行っています。${message}`
           }
+
+          responseHelper.setSimpleSpeech(speech)
         }
+        responseHelper.setSessionAttributes(info)     
 
-        responseHelper.setSessionAttributes(info)
-
-        responseHelper.setSimpleSpeech(speech)
-        responseHelper.setSimpleSpeech(speech, true)
+        responseHelper.setReprompt(speech)
         break;
       // 返答がYesの場合
       case 'Clova.YesIntent':
@@ -113,11 +113,19 @@ const clovaSkillHandler = clova.Client
           info.painful = "yes"
           info = defaultInfo
 
+          if(info.painful === "yes" && info.feeling === "")
+          {
+            
+          }
           speech = {
             lang: 'ja',
             type: 'PlainText',
             value: `薬を飲むか、病院に行きましょう。`
           }
+
+          responseHelper.setSimpleSpeech(speech)
+          responseHelper.endSession()
+          break;
         }
         responseHelper.setSessionAttributes(info)
 
@@ -165,6 +173,10 @@ const clovaSkillHandler = clova.Client
             type: 'PlainText',
             value: `体に気をつけてくださいね。`
           }
+
+          responseHelper.setSimpleSpeech(speech)
+          responseHelper.endSession()
+          break;
         }
         responseHelper.setSessionAttributes(info)
 
