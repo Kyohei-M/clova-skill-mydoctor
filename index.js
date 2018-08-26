@@ -43,11 +43,12 @@ const clovaSkillHandler = clova.Client
           }
           responseHelper.setSimpleSpeech(speech)
 
+          /*info.asking = "feeling"
           speech = {
             lang: 'ja',
             type: 'PlainText',
             value: messageFeeling
-          }
+          }*/
         }
         else {
           let message
