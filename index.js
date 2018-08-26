@@ -134,6 +134,7 @@ const clovaSkillHandler = clova.Client
             speech.value = `お元気そうで何よりです。`
           }
 
+          console.log(info)
           info = defaultInfo
           responseHelper.setSimpleSpeech(speech)
           responseHelper.endSession()
@@ -202,6 +203,7 @@ const clovaSkillHandler = clova.Client
             speech.value = `お元気そうで何よりです。`
           }
 
+          console.log(info)
           info = defaultInfo
           responseHelper.setSimpleSpeech(speech)
           responseHelper.endSession()
