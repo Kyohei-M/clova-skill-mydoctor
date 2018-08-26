@@ -36,15 +36,19 @@ const clovaSkillHandler = clova.Client
       case 'ResultIntent':
         if (info.asking === "none") {
           let weight = 60
-          speech = {
+          let speechFirst = {
             lang: 'ja',
             type: 'PlainText',
             value: `今日の体重は${weight}キログラムです。体調のチェックを始めます。${messageFeeling}`
           }
-          responseHelper.setSimpleSpeech(speech)
+          responseHelper.setSimpleSpeech(speechFirst)
 
           info.asking = "feeling"
-          speech.value = messageFeeling
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: messageFeeling
+          }
         }
         else {
           let message
@@ -107,7 +111,6 @@ const clovaSkillHandler = clova.Client
         }
         else if (info.asking === "painful") {
           info.painful = "yes"
-          info = defaultInfo
 
           speech = {
             lang: 'ja',
@@ -131,6 +134,7 @@ const clovaSkillHandler = clova.Client
             speech.value = `お元気そうで何よりです。`
           }
 
+          info = defaultInfo
           responseHelper.setSimpleSpeech(speech)
           responseHelper.endSession()
           break;
@@ -174,7 +178,7 @@ const clovaSkillHandler = clova.Client
         }
         else if (info.asking === "painful") {
           info.painful = "no"
-          info = defaultInfo
+          
 
           speech = {
             lang: 'ja',
@@ -198,6 +202,7 @@ const clovaSkillHandler = clova.Client
             speech.value = `お元気そうで何よりです。`
           }
 
+          info = defaultInfo
           responseHelper.setSimpleSpeech(speech)
           responseHelper.endSession()
           break;
