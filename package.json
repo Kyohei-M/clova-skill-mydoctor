@@ -5,5 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "clova-cek-sdk-nodejs": "file:./clova-cek-sdk-nodejs"
   }
 }
