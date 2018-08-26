@@ -115,15 +115,19 @@ const clovaSkillHandler = clova.Client
             value: ""
           }
           if (info.painful === "yes" && info.feeling === "bad") {
+            console.log("so bad")
             speech.value = `体調が悪いようです。すぐに病院に行きましょう。`
           }
           else if (info.painful === "yes" || info.feeling === "bad") {
+            console.log("bad")
             speech.value = `体調が悪いようです。薬を飲むか、病院に行くことを勧めます。`
           }
           else if (info.tired === "yes" || info.sleptwell === "yes") {
+            console.log("not good")
             speech.value = `体調があまり良くありませんね。休息が必要です。`
           }
           else {
+            console.log("good")
             speech.value = `お元気そうで何よりです。`
           }
 
@@ -178,15 +182,19 @@ const clovaSkillHandler = clova.Client
             value: ""
           }
           if (info.painful === "yes" && info.feeling === "bad") {
+            console.log("so bad")
             speech.value = `体調が悪いようです。すぐに病院に行きましょう。`
           }
           else if (info.painful === "yes" || info.feeling === "bad") {
+            console.log("bad")
             speech.value = `体調が悪いようです。薬を飲むか、病院に行くことを勧めます。`
           }
           else if (info.tired === "yes" || info.sleptwell === "yes") {
+            console.log("not good")
             speech.value = `体調があまり良くありませんね。休息が必要です。`
           }
           else {
+            console.log("good")
             speech.value = `お元気そうで何よりです。`
           }
 
