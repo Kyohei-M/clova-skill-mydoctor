@@ -3,7 +3,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const TEMPLATE_INQUIRY = '何をしたいですか？'
-const defaultInfo = {
+const messageFeeling = '気分は良いですか？'
+const messageSleptWell = '昨晩はよく眠れましたか？'
+const messageTired = '疲れていますか？'
+const messagePaiful = 'どこか痛いところはありますか？'
+
+var defaultInfo = {
   asking: 'none',
   feeling: 'none',
   sleptwell: 'none',
@@ -15,9 +20,7 @@ const clovaSkillHandler = clova.Client
   .configureSkill()
   // スキルの起動リクエスト
   .onLaunchRequest(responseHelper => {
-    responseHelper.setSessionAttributes({
-      test:"test1"
-    })
+    responseHelper.setSessionAttributes(defaultInfo)
     responseHelper.setSimpleSpeech({
       lang: 'ja',
       type: 'PlainText',
@@ -27,66 +30,155 @@ const clovaSkillHandler = clova.Client
   // カスタムインテント or ビルトインインテント
   .onIntentRequest(responseHelper => {
     const intent = responseHelper.getIntentName();
-    let test = responseHelper.getSessionAttributes()
-    console.log(test.test)
-    let info = {
-      asking: 'none',
-      feeling: 'none',
-      sleptwell: 'none',
-      tired: 'none',
-      painful: 'none',
-    }
+    let info = responseHelper.getSessionAttributes()
     let speech;
     switch (intent) {
       case 'ResultIntent':
-        //responseHelper.setSessionAttributes({})
-        let weight = 60
-        const questionfirst = '具合は大丈夫ですか？'
-        speech = {
-          lang: 'ja',
-          type: 'PlainText',
-          value: `$今日の体重は${weight}キログラムです。${questionfirst}`
+        if (info.asking === "none") {
+          let weight = 60
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: `$今日の体重は${weight}キログラムです。体調のチェックを始めます。${messageFeeling}`
+          }
+          responseHelper.setSimpleSpeech(speech)
+
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: messageFeeling
+          }
         }
+        else {
+          let message
+          if (info.asking === "feeling") {
+            message = messageFeeling
+          }
+          else if (info.asking === "sleptwell") {
+            message = messageSleptWell
+          }
+          else if (info.asking === "tired") {
+            message = messageTired
+          }
+          else if (info.asking === "painful") {
+            message = messagePaiful
+          }
+
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: `体調のチェックを行っています。${message}`
+          }
+        }
+
+        responseHelper.setSessionAttributes(info)
+
         responseHelper.setSimpleSpeech(speech)
-
-        const speech2 = {
-          lang: 'ja',
-          type: 'PlainText',
-          value: questionfirst
-        }
-        responseHelper.setSimpleSpeech(speech2)
-        responseHelper.setSimpleSpeech(speech2, true)
-
+        responseHelper.setSimpleSpeech(speech, true)
         break;
       // 返答がYesの場合
       case 'Clova.YesIntent':
-        speech = {
-          lang: 'ja',
-          type: 'PlainText',
-          value: `元気ならよかったです。`
-        }
-        responseHelper.setSimpleSpeech(speech)
+        if (info.asking === "feeling") {
+          info.feeling = "good"
+          info.asking = "sleptwell"
 
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: messageSleptWell
+          }
+        }
+        else if (info.asking === "sleptwell") {
+          info.sleptwell = "yes"
+          info.asking = "tired"
+
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: messageTired
+          }
+        }
+        else if (info.asking === "tired") {
+          info.tired = "yes"
+          info.asking = "painful"
+
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: messagePaiful
+          }
+        }
+        else if (info.asking === "painful") {
+          info.painful = "yes"
+          info = defaultInfo
+
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: `薬を飲むか、病院に行きましょう。`
+          }
+        }
+        responseHelper.setSessionAttributes(info)
+
+        responseHelper.setSimpleSpeech(speech)
+        responseHelper.setSimpleSpeech(speech, true)
         break;
       // 返答がNoの場合
       case 'Clova.NoIntent':
-      speech = {
-        lang: 'ja',
-        type: 'PlainText',
-        value: `無理しないでくださいね。`
-      }
-      responseHelper.setSimpleSpeech(speech)
+        if (info.asking === "feeling") {
+          info.feeling = "bad"
+          info.asking = "sleptwell"
 
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: messageSleptWell
+          }
+        }
+        else if (info.asking === "sleptwell") {
+          info.sleptwell = "no"
+          info.asking = "tired"
+
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: messageTired
+          }
+        }
+        else if (info.asking === "tired") {
+          info.tired = "no"
+          info.asking = "painful"
+
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: messagePaiful
+          }
+        }
+        else if (info.asking === "painful") {
+          info.painful = "no"
+          info = defaultInfo
+
+          speech = {
+            lang: 'ja',
+            type: 'PlainText',
+            value: `体に気をつけてくださいね。`
+          }
+        }
+        responseHelper.setSessionAttributes(info)
+
+        responseHelper.setSimpleSpeech(speech)
+        responseHelper.setSimpleSpeech(speech, true)
         break;
       // ビルトインインテント。ユーザーによるインプットが使い方のリクエストと判別された場合
       case 'Clova.GuideIntent':
         speech = {
           lang: 'ja',
           type: 'PlainText',
-          value: TEMPLATE_INQUIRY
+          value: '測定結果を確認するか、体調のチェックを行いましょう。'
         }
+        responseHelper.setSessionAttributes(defaultInfo)
         responseHelper.setSimpleSpeech(speech)
-        responseHelper.setSimpleSpeech(speech, true)
         break;
       // ビルトインインテント。ユーザーによるインプットがキャンセルのみであった場合
       case 'Clova.CancelIntent':
@@ -95,6 +187,7 @@ const clovaSkillHandler = clova.Client
           type: 'PlainText',
           value: `意図しない入力です。${TEMPLATE_INQUIRY}`
         }
+        responseHelper.setSessionAttributes(defaultInfo)
         responseHelper.setSimpleSpeech(speech)
         break;
     }
