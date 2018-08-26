@@ -3,12 +3,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const TEMPLATE_INQUIRY = '何をしたいですか？'
+const defaultInfo = {
+  asking: 'none',
+  feeling: 'none',
+  sleptwell: 'none',
+  tired: 'none',
+  painful: 'none',
+}
 
 const clovaSkillHandler = clova.Client
   .configureSkill()
   // スキルの起動リクエスト
   .onLaunchRequest(responseHelper => {
-    //responseHelper.setSessionAttributes({})
+    responseHelper.setSessionAttributes({
+      test:"test1"
+    })
     responseHelper.setSimpleSpeech({
       lang: 'ja',
       type: 'PlainText',
@@ -18,11 +27,19 @@ const clovaSkillHandler = clova.Client
   // カスタムインテント or ビルトインインテント
   .onIntentRequest(responseHelper => {
     const intent = responseHelper.getIntentName();
+    let test = responseHelper.getSessionAttributes()
+    console.log(test.test)
+    let info = {
+      asking: 'none',
+      feeling: 'none',
+      sleptwell: 'none',
+      tired: 'none',
+      painful: 'none',
+    }
     let speech;
     switch (intent) {
       case 'ResultIntent':
         //responseHelper.setSessionAttributes({})
-        console.log(responseHelper);
         let weight = 60
         const questionfirst = '具合は大丈夫ですか？'
         speech = {
