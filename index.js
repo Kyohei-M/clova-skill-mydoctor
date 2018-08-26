@@ -44,7 +44,7 @@ const clovaSkillHandler = clova.Client
           }
           if(intent === "CheckIntent")
           {
-            speechFirst = `体調のチェックを始めます。${messageFeeling}`
+            speechFirst.value = `体調のチェックを始めます。${messageFeeling}`
           }
           responseHelper.setSimpleSpeech(speechFirst)
 
@@ -139,7 +139,6 @@ const clovaSkillHandler = clova.Client
             speech.value = `お元気そうで何よりです。`
           }
 
-          console.log(info)
           info = defaultInfo
           responseHelper.setSimpleSpeech(speech)
           responseHelper.endSession()
@@ -208,7 +207,6 @@ const clovaSkillHandler = clova.Client
             speech.value = `お元気そうで何よりです。`
           }
 
-          console.log(info)
           info = defaultInfo
           responseHelper.setSimpleSpeech(speech)
           responseHelper.endSession()
