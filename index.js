@@ -34,12 +34,17 @@ const clovaSkillHandler = clova.Client
     let speech;
     switch (intent) {
       case 'ResultIntent':
+      case 'CheckIntent':
         if (info.asking === "none") {
           let weight = 60
           let speechFirst = {
             lang: 'ja',
             type: 'PlainText',
             value: `今日の体重は${weight}キログラムです。体調のチェックを始めます。${messageFeeling}`
+          }
+          if(intent === "CheckIntent")
+          {
+            speechFirst = `体調のチェックを始めます。${messageFeeling}`
           }
           responseHelper.setSimpleSpeech(speechFirst)
 
@@ -125,7 +130,7 @@ const clovaSkillHandler = clova.Client
             console.log("bad")
             speech.value = `体調が悪いようです。薬を飲むか、病院に行くことを勧めます。`
           }
-          else if (info.tired === "yes" || info.sleptwell === "yes") {
+          else if (info.tired === "yes" || info.sleptwell === "no") {
             console.log("not good")
             speech.value = `体調があまり良くありませんね。休息が必要です。`
           }
@@ -194,7 +199,7 @@ const clovaSkillHandler = clova.Client
             console.log("bad")
             speech.value = `体調が悪いようです。薬を飲むか、病院に行くことを勧めます。`
           }
-          else if (info.tired === "yes" || info.sleptwell === "yes") {
+          else if (info.tired === "yes" || info.sleptwell === "no") {
             console.log("not good")
             speech.value = `体調があまり良くありませんね。休息が必要です。`
           }
