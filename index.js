@@ -44,11 +44,7 @@ const clovaSkillHandler = clova.Client
           responseHelper.setSimpleSpeech(speech)
 
           info.asking = "feeling"
-          speech = {
-            lang: 'ja',
-            type: 'PlainText',
-            value: messageFeeling
-          }
+          speech.value = messageFeeling
         }
         else {
           let message
@@ -113,14 +109,22 @@ const clovaSkillHandler = clova.Client
           info.painful = "yes"
           info = defaultInfo
 
-          if(info.painful === "yes" && info.feeling === "")
-          {
-            
-          }
           speech = {
             lang: 'ja',
             type: 'PlainText',
-            value: `薬を飲むか、病院に行きましょう。`
+            value: ""
+          }
+          if (info.painful === "yes" && info.feeling === "bad") {
+            speech.value = `体調が悪いようです。すぐに病院に行きましょう。`
+          }
+          else if (info.painful === "yes" || info.feeling === "bad") {
+            speech.value = `体調が悪いようです。薬を飲むか、病院に行くことを勧めます。`
+          }
+          else if (info.tired === "yes" || info.sleptwell === "yes") {
+            speech.value = `体調があまり良くありませんね。休息が必要です。`
+          }
+          else {
+            speech.value = `お元気そうで何よりです。`
           }
 
           responseHelper.setSimpleSpeech(speech)
@@ -171,7 +175,19 @@ const clovaSkillHandler = clova.Client
           speech = {
             lang: 'ja',
             type: 'PlainText',
-            value: `体に気をつけてくださいね。`
+            value: ""
+          }
+          if (info.painful === "yes" && info.feeling === "bad") {
+            speech.value = `体調が悪いようです。すぐに病院に行きましょう。`
+          }
+          else if (info.painful === "yes" || info.feeling === "bad") {
+            speech.value = `体調が悪いようです。薬を飲むか、病院に行くことを勧めます。`
+          }
+          else if (info.tired === "yes" || info.sleptwell === "yes") {
+            speech.value = `体調があまり良くありませんね。休息が必要です。`
+          }
+          else {
+            speech.value = `お元気そうで何よりです。`
           }
 
           responseHelper.setSimpleSpeech(speech)
