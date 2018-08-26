@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "clova-cek-sdk-nodejs": "file:./clova-cek-sdk-nodejs"
+    "@line/clova-cek-sdk-nodejs": "file:clova-cek-sdk-nodejs",
+    "express": "^4.16.3"
   }
 }
